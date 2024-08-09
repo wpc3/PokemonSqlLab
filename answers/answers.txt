@@ -58,3 +58,54 @@ PART 1
 
        Part 2
 
+    1. mysql>  select p.name, t.name from pokemons p left join types t on p.primary_type = t.id;
+    2.mysql>  select p.name, t.name from pokemons p left join types t on p.secondary_type = t.id where p.name = 'Rufflet';
+      +---------+--------+
+      | name    | name   |
+      +---------+--------+
+      | Rufflet | Flying |
+      +---------+--------+
+      1 row in set (0.01 sec)
+
+      3.mysql> select p.name from pokemons p right join trainers t on p.id=t.trainerID where t.trainerID = 303;
+        +----------+
+        | name     |
+        +----------+
+        | Bronzong |
+        +----------+
+
+
+      4.mysql> select count(name) from pokemons p where p.secondary_type = 7;
+        +-------------+
+        | count(name) |
+        +-------------+
+        |          31 |
+        +-------------+
+        1 row in set (0.03 sec)
+
+      5. mysql> select t.name, count(p.name) from pokemons p left join types t on p.primary_type = t.id group by p.primary_type;
+         +----------+---------------+
+         | name     | count(p.name) |
+         +----------+---------------+
+         | Normal   |            90 |
+         | Water    |            95 |
+         | Grass    |            59 |
+         | Rock     |            38 |
+         | Fire     |            38 |
+         | Ground   |            29 |
+         | Poison   |            27 |
+         | Bug      |            61 |
+         | Electric |            35 |
+         | Dragon   |            22 |
+         | Steel    |            19 |
+         | Dark     |            24 |
+         | Fighting |            25 |
+         | Psychic  |            38 |
+         | Ghost    |            19 |
+         | Fairy    |            14 |
+         | Ice      |            22 |
+         | Flying   |             1 |
+         +----------+---------------+
+         18 rows in set (0.02 sec)
+
+
