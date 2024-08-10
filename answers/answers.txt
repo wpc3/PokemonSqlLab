@@ -67,12 +67,14 @@ PART 1
       +---------+--------+
       1 row in set (0.01 sec)
 
-      3.mysql> select p.name from pokemons p right join trainers t on p.id=t.trainerID where t.trainerID = 303;
-        +----------+
-        | name     |
-        +----------+
-        | Bronzong |
-        +----------+
+      3.mysql> select p.name, t.trainerID from pokemons p left join pokemon_trainer t on p.id = t.pokemon_id where t.trainerID = 303;
+        +-----------+-----------+
+        | name      | trainerID |
+        +-----------+-----------+
+        | Wailord   |       303 |
+        | Vileplume |       303 |
+        +-----------+-----------+
+        2 rows in set (0.04 sec)
 
 
       4.mysql> select count(name) from pokemons p where p.secondary_type = 7;
@@ -107,5 +109,27 @@ PART 1
          | Flying   |             1 |
          +----------+---------------+
          18 rows in set (0.02 sec)
+
+         6. mysql> select trainerID, count(*) from pokemon_trainer where pokeLevel = 100 group by trainerID;
+
+         7.mysql> select count(pokemon_id) from pokemon_trainer group by pokeLevel having count(trainerID) = 1;
+           +-------------------+
+           | count(pokemon_id) |
+           +-------------------+
+           |                 1 |
+           +-------------------+
+           1 row in set (0.03 sec)
+
+
+         Part 4
+
+        1. select p.name, tt.trainername, pt.pokelevel, t.name, t2.name from pokemons p left join pokemon_trainer pt on p.id = pt.pokemon_ID left join trainers tt on p.id = tt.trainerID left join types t on p.primary_type = t.id left join types t2 on p.secondary_type = t2.id order by pt.pokelevel desc;
+
+        2.mysql> select t.trainername, count(pt.pokemon_id) as pokemon_count from trainers
+           t left join pokemon_trainer pt on t.trainerID = pt.trainerID where pt.pokelevel
+           = 100
+           The Cool trainers are tied for the strongest pokemon trainers because they have the most pokemon at level 100.
+
+
 
 
